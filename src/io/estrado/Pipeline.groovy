@@ -206,6 +206,16 @@ def sbtEBPublish(Map args) {
       sh "aws elasticbeanstalk describe-application-versions"
 }
 
+def sbtStore(Map args) {
+      sh "aws s3 cp ~/.sbt s3://burner-jenkins/sbt --recursive"
+      sh "aws s3 cp ~/.ivy2 s3://burner-jenkins/ivy2 --recursive"
+}
+
+def sbtRestore(Map args) {
+     sh "aws s3 cp s3://burner-jenkins/sbt ~/.sbt --recursive"
+     sh "aws s3 cp s3://burner-jenkins/ivy2 ~/.ivy2 --recursive"
+}
+
 @NonCPS
 def getMapValues(Map map=[:]) {
     // jenkins and workflow restriction force this function instead of map.values(): https://issues.jenkins-ci.org/browse/JENKINS-27421
